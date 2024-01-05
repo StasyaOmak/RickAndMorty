@@ -14,7 +14,12 @@ class LaunchScreenController: UIViewController {
     }()
     
     private lazy var logoImage: UIImageView = {
-        return createImageView(named: "loadingImage", frame: CGRect(x: 45, y: 329, width: 300, height: 300))
+        let width: CGFloat = 200
+        let height: CGFloat = 200
+        let x = (view.frame.width - width) / 2
+        let y = (view.frame.height - height) / 2
+        
+        return createImageView(named: "loadingImage", frame: CGRect(x: x, y: y, width: width, height: height))
     }()
     
     override func viewDidLoad() {

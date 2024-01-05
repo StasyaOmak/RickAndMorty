@@ -83,7 +83,8 @@ class MainCollectionViewCell: UICollectionViewCell {
     private let stateLabel: UILabel = {
         let element = UILabel()
         element.numberOfLines = 0
-        element.font = UIFont.boldSystemFont(ofSize: 18)
+        element.font = UIFont.systemFont(ofSize: 16)
+        element.tintColor = UIColor.systemGray
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()

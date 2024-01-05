@@ -27,7 +27,7 @@ struct CharacterModel: Decodable {
             Descr("Origin", self.origin.name),
             Descr("Type", self.type),
             Descr("Location", self.location.name)
-        ]
+        ].filter { !$0.subTitle.isEmpty }
     }
 }
 

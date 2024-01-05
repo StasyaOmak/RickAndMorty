@@ -82,7 +82,6 @@ class HomeViewController: UIViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = .systemBlue
         let titleLabel = UILabel()
-        titleLabel.text = "Episodes"
         titleLabel.textColor = UIColor.label
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         navigationItem.titleView = titleLabel
@@ -135,9 +134,9 @@ extension HomeViewController {
             filterButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             filterButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: filterButton.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: filterButton.bottomAnchor,constant: 15 ),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
@@ -146,7 +145,7 @@ extension HomeViewController {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destVC = DescriptionViewController()
+        let destVC = DetailViewController()
         
         episodNetworkManager.fetchCharacter(url: episods[indexPath.row].character) { [weak self] result in
             switch result {
@@ -155,7 +154,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
                     switch result {
                     case .success(let success):
                         DispatchQueue.main.async {
-                            destVC.characterArray = character.getArray()
+                            destVC.detailModel = DetailModel(
+                                characterArray: character.getArray(),
+                                name: character.name,
+                                image: success
+                            )
                             self?.navigationController?.pushViewController(destVC, animated: true)
                         }
                     case .failure(let failure):
@@ -168,8 +171,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
                 print("Error fetching data")
             }
         }
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -178,11 +179,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MainCollectionViewCell
-
-      
-
+        
         let model = episods[indexPath.row]
         cell.configure(with: model)
+        
+        cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+        cell.layer.borderWidth = 2
+        cell.layer.cornerRadius = 8
 
         return cell
     }

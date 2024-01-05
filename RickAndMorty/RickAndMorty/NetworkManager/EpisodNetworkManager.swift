@@ -8,11 +8,12 @@
 import UIKit
 
 class EpisodNetworkManager {
+    
     private let episodeUrl = "https://rickandmortyapi.com/api/episode"
     private let characterUrl = "https://rickandmortyapi.com/api/character"
     
     func fetchEpisode(completion: @escaping (Result<[EpisodModel], Error>) -> () ) {
-        guard let url = URL(string: episodeUrl) else { return } //1
+        guard let url = URL(string: episodeUrl) else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -20,7 +21,7 @@ class EpisodNetworkManager {
         let config = URLSessionConfiguration.default
         config.waitsForConnectivity = true
         
-        URLSession(configuration: config).dataTask(with: request) { (data, response, error) //2
+        URLSession(configuration: config).dataTask(with: request) { (data, response, error)
             in
             
             guard error == nil else {
