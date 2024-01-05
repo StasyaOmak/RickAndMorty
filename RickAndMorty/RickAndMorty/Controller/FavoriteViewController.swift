@@ -22,6 +22,5 @@ class FavoriteViewController: UIViewController {
         titleLabel.textColor = UIColor.label
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         navigationItem.titleView = titleLabel
-
     }
 }

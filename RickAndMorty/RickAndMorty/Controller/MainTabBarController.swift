@@ -14,7 +14,7 @@ class MainTabBarController: UITabBarController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tabBar.itemPositioning = .centered
         generateTabBar()
         setTabBarAppearance()
     }
